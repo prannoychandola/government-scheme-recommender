@@ -1,29 +1,66 @@
-# Government Scheme Recommender
+# 🏛️ Government Scheme Recommender
 
-A local Flask portfolio demo that helps people explore a curated catalogue of Indian public programmes through a guided conversation. The recommender is transparent and rule-based: it ranks possible matches using explicit fields in a CSV file. It does not use machine learning, an LLM, or automated eligibility determinations.
+### A transparent, CSV-backed chatbot for exploring Indian public programmes
 
-> **Important:** This is an informational prototype, not a government service and not a guarantee of eligibility, benefits, application acceptance, or current availability. Programme rules change. Verify every detail with the responsible department or official portal before applying. Do not enter Aadhaar numbers, bank details, passwords, or other sensitive identifiers.
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-REST%20API-000000?logo=flask&logoColor=white)
+![Data](https://img.shields.io/badge/Data-CSV-2E7D32)
+![Matching](https://img.shields.io/badge/Matching-Rule--based-D98A32)
 
-## Features
+**[Open the live chatbot](https://government-scheme-recommender.onrender.com/)** · **[View the GitHub repository](https://github.com/prannoychandola/government-scheme-recommender)**
 
-- Guided, one-question-at-a-time conversation with optional skips
-- Progressive collection of interests, age, state, gender, income, education, employment, occupation and voluntarily shared category
-- CSV-backed catalogue with 100 distinct entries across education, jobs and skills, agriculture, women, healthcare, housing, financial assistance, social welfare and enterprise
-- Transparent scoring, match reasons, explicit-rule filtering, and verification notes for unknown criteria
-- Scheme cards with benefit summaries, eligibility status, application link and detailed information dialog
-- Search catalogue API with category and keyword filters
-- Responsive desktop/mobile layout, loading state, typing indicator, error/empty states, restart and conversational follow-ups
-- No user profiles or conversation data are persisted by the application
+> **Important:** This is an independent informational prototype, not a government service and not an eligibility decision. Scheme rules and availability can change. Verify details with the responsible department before applying. Never enter Aadhaar numbers, bank details, passwords, or other sensitive identifiers.
 
-## Technologies
+## 📖 Overview
 
-Python 3.10+, Flask, Python standard-library `csv`, HTML, CSS and vanilla JavaScript. No database or frontend framework is required.
+Finding public assistance can mean navigating many separate programmes and eligibility rules. This project provides a conversational way to explore a curated catalogue of Indian government schemes. It asks for relevant details progressively, then ranks candidate schemes using transparent rules and the fields available in a CSV dataset.
 
-## Architecture
+The recommender is intentionally **rule-based**. It does not use machine learning, NLP, or an LLM, and it cannot confirm eligibility or guarantee benefits.
 
-The Flask app serves the page and JSON API. `backend/chatbot.py` owns the conversational stages and input parsing. `backend/recommender.py` reads and validates the CSV, applies transparent eligibility checks and computes relative match scores. The browser renders chat and scheme cards and requests detail records from Flask. The catalogue is stored in `data/government_schemes.csv`.
+## ✨ Features
 
-## Project Structure
+- 💬 Guided conversation that collects information one question at a time
+- ⏭️ Optional questions can be skipped
+- 🗺️ Profile questions cover interests, age, state, gender, income, education, employment, occupation, and optionally shared category
+- 🧾 CSV-backed catalogue of 100 distinct scheme entries across nine support areas
+- ⚖️ Transparent ranking, match explanations, and explicit-rule exclusions
+- 🔎 Unknown or unverified criteria are identified instead of guessed
+- 🗂️ Scheme cards include benefits, eligibility notes, official links, and detailed views
+- 🔌 JSON API for catalogue search, recommendations, conversation, and scheme details
+- 📱 Responsive interface with loading, empty, validation-error, and restart states
+- 🔒 No user profile or conversation data is persisted by the application
+
+## 🛠️ Technology Stack
+
+| Area | Technology |
+| --- | --- |
+| Language | Python 3.10+ |
+| Backend | Flask |
+| Data | CSV and Python standard-library `csv` module |
+| Frontend | HTML5, CSS3, vanilla JavaScript |
+| Production server | Gunicorn on Render |
+| Tests | Python `unittest` |
+
+## 🧭 Architecture
+
+Flask serves the web interface and JSON API. The chatbot module validates answers and controls the conversation stages. The recommender loads the CSV, checks known criteria, calculates a relative match score, and explains each result.
+
+```text
+Visitor
+  │
+  ▼
+Chat interface (HTML / CSS / JavaScript)
+  │ JSON requests
+  ▼
+Flask API ─────── Chat flow and input validation
+  │
+  ├────────────── Rule-based recommendation engine
+  │                       │
+  └───────────────────────▼
+                    Scheme catalogue (CSV)
+```
+
+## 📂 Project Structure
 
 ```text
 government-scheme-recommender/
@@ -45,9 +82,9 @@ government-scheme-recommender/
 └── README.md
 ```
 
-## Installation (Windows / VS Code)
+## 🚀 Installation on Windows
 
-Open PowerShell in this project folder. Use Python 3.10 or newer.
+Open PowerShell in the project directory. Python 3.10 or newer is required.
 
 ```powershell
 py -3 -m venv .venv
@@ -56,52 +93,55 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-If PowerShell blocks activation, use the interpreter directly:
+If PowerShell prevents environment activation, call the virtual environment directly:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-In VS Code, select `.venv\Scripts\python.exe` with **Python: Select Interpreter**.
+In VS Code, select `.venv\Scripts\python.exe` using **Python: Select Interpreter**.
 
-## Run
+## ▶️ Run Locally
 
 ```powershell
 python app.py
 ```
 
-Open `http://127.0.0.1:5000`. Stop the local development server with `Ctrl+C`. Flask debug mode is enabled only for local development; do not expose this development server to the public internet.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000). Stop the development server with `Ctrl+C`. The Flask debug server is for local development only and should not be exposed publicly.
 
-## Deploy Online
+## ☁️ Live Deployment
 
-GitHub stores the source code; it does not run this Flask application through GitHub Pages. For a live, working chatbot, deploy the repository as a Python web service on Render. The included `render.yaml` configures Gunicorn, the production WSGI server, and a health check.
+The project is deployed as a Flask web service on Render. GitHub hosts the source; GitHub Pages cannot run the Python backend.
 
-1. Push this project to a GitHub repository.
-2. In Render, choose **New** > **Blueprint** and connect the repository.
-3. Review the service settings from `render.yaml` and create the service.
-4. Open the public `onrender.com` URL shown by Render after deployment completes.
+- 🌐 **Live app:** [government-scheme-recommender.onrender.com](https://government-scheme-recommender.onrender.com/)
+- 📦 **Source:** [github.com/prannoychandola/government-scheme-recommender](https://github.com/prannoychandola/government-scheme-recommender)
+- 🆓 **Current instance:** Render Free
 
-The first request may take longer on a free instance that has spun down. The local Flask development server is not used in production.
+To deploy your own instance, create a Render **Web Service** from the public Git repository and configure:
 
-## Tests
+| Setting | Value |
+| --- | --- |
+| Runtime | Python 3 |
+| Branch | `main` |
+| Build command | `pip install -r requirements.txt` |
+| Start command | `gunicorn app:app` |
+| Health check | `/` |
 
-```powershell
-python -m unittest discover -s tests -v
-```
+The included `render.yaml` can be used when creating a Render Blueprint. The currently published service was connected through Render's public Git repository option; manual redeployment may be required after future pushes. Free instances can spin down while idle, which may make the first request slower.
 
-Tests cover catalogue integrity, explicit age filtering, explanation metadata, input validation, the chat start route, scheme details and core API responses.
+## 🔌 API
 
-## API
+All API endpoints accept and return JSON except `GET /`, which serves the application page.
 
-All endpoints use JSON except `GET /`, which serves the application page.
+| Method and route | Purpose |
+| --- | --- |
+| `GET /` | Serve the chatbot interface |
+| `GET /api/schemes` | List schemes; supports optional `category` and `q` query parameters |
+| `POST /api/recommend` | Rank schemes using a supplied profile |
+| `POST /api/chat` | Start or continue the guided conversation |
+| `GET /api/scheme/<scheme_id>` | Retrieve one scheme's details; returns 404 if not found |
 
-### `GET /api/schemes`
-
-Returns `{ "count": 100, "schemes": [...] }`. Optional query parameters: `category` for exact category filtering and `q` for a simple name/category/description search.
-
-### `POST /api/recommend`
-
-Request:
+### `POST /api/recommend` example
 
 ```json
 {
@@ -114,43 +154,66 @@ Request:
 }
 ```
 
-Allowed profile fields: `interests`, `age`, `state`, `gender`, `annual_income`, `education`, `employment_status`, `occupation`, and `category`. Values may be omitted. Returns `{ "count": n, "recommendations": [...] }`; invalid JSON shape or values return HTTP 400.
+The response contains `count` and `recommendations`. Invalid request shapes or profile values return HTTP 400. Each recommendation includes its relative score, reasons, eligibility status, and verification notes.
 
-### `POST /api/chat`
+### `POST /api/chat` example
 
-Request fields: `message` (up to 500 characters), `profile` (object) and `stage` (conversation stage). Set `stage` to `start` and an empty message to begin. Each response contains `reply`, `stage`, `profile`, and question metadata (`input_type`, `options`, `optional`, `progress`) where applicable. When the intake completes, it also contains `recommendations`. Follow-up messages can ask why a match appears, request more results, or restart.
+```json
+{
+  "message": "",
+  "profile": {},
+  "stage": "start"
+}
+```
 
-### `GET /api/scheme/<scheme_id>`
+Responses include the assistant's `reply`, the current `stage`, the `profile`, and question metadata when more input is needed. The completed conversation response also includes recommendations.
 
-Returns `{ "scheme": {...} }`, or HTTP 404 when the ID is unknown.
+## 📊 Dataset
 
-## Dataset
+`data/government_schemes.csv` contains 100 catalogue entries with fields for scheme ID and name, department, category, description, eligibility, age, gender, income, state, education, occupation, benefits, application process, website, required documents, verification status, and source note.
 
-`data/government_schemes.csv` contains 100 unique catalogue entries and these fields: scheme ID/name, department, category, description, eligibility criteria, min/max age, gender, income limit, state, education, occupation, benefits, process, URL, documents, verification status and source note.
+This is a manually curated demonstration dataset, not an official or exhaustive live feed. Details that have not been independently confirmed are marked `Unknown - verify`; general directory links are not presented as validated scheme-specific sources. Some entries may be historical, umbrella programmes, or subject to changed rules. Confirm current details with the relevant official department before acting.
 
-The CSV is a manually curated demo catalogue, not a live feed or an independently audited official dataset. Scheme names, current status, departments and URLs can change. Scheme-specific details that have not been independently checked are marked `Unknown - verify`, with source notes identifying directory/department links versus validated scheme pages. Some catalogue entries are historical or umbrella programmes; their status is flagged. Official links are provided as starting points and must be checked before use. Do not infer eligibility or benefit amounts from an unknown field.
+## 🧮 Recommendation Methodology
 
-## Recommendation Methodology
+1. Validate and normalize the information supplied by the user.
+2. Exclude a scheme only when a known eligibility rule explicitly conflicts with the profile.
+3. Rank remaining candidates using interest relevance and known matching criteria.
+4. Explain matching factors and list criteria that are missing or need verification.
 
-The engine applies hard exclusions only when a supplied age, state, gender, education, occupation or category explicitly conflicts with a corresponding known catalogue rule. Missing or unknown rules are not treated as a match; the result includes a verification note instead. Relevant interest/category adds the largest score contribution; matching known criteria adds smaller contributions. A transparent relative match score ranks candidates. It is not a probability, confidence interval, benefit estimate or eligibility decision. The ranking is bounded to 50 entries per request.
+Unknown rules are not assumed to be satisfied. The score is a relative rule-match ranking, not a probability, confidence value, or eligibility decision. The API returns at most 50 results.
 
-## Screenshots
+## 🧪 Tests
 
-Screenshots can be added here after running the application locally.
+Run the test suite from the project root:
 
-## Limitations
+```powershell
+python -m unittest discover -s tests -v
+```
 
-- The catalogue is static, manually curated, and not a complete or official source of scheme data.
-- Scheme eligibility, benefits, document lists, availability and application steps can vary by state, component and date; many fields explicitly require verification.
-- Some entries are portals, umbrella programmes or historical programmes rather than currently open individual benefits.
-- Text matching is literal and intentionally simple; it does not understand synonyms or languages beyond the entered text.
-- The score is a rule-match ranking only. This prototype does not use ML, NLP, an LLM, user authentication or persistent storage.
-- The local Flask development server is not hardened for production.
+Coverage includes catalogue integrity, explicit eligibility filtering, recommendation explanations, invalid chatbot input, numeric parsing, skip handling, the full conversation flow, API validation, and scheme details.
 
-## Future Improvements
+## 🖼️ Screenshots
 
-- Validate each catalogue row against dated scheme guidelines and store a reviewer/source URL per field.
-- Add a safe, sourced update workflow and data freshness checks.
-- Add state-specific verified catalogues and multilingual user-tested conversations.
-- Improve controlled vocabularies, matching tests and accessible keyboard/screen-reader review.
-- Deploy behind a production WSGI server with appropriate security, privacy and operational review.
+Try the [live application](https://government-scheme-recommender.onrender.com/) to view the current interface. Screenshots can be added here as the project evolves.
+
+## ⚠️ Limitations
+
+- The catalogue is static, manually curated, incomplete, and not independently audited.
+- Scheme eligibility, benefits, documents, availability, deadlines, and application steps can vary and change over time.
+- Some entries may be umbrella, historical, or otherwise not currently open programmes.
+- Text matching is literal and intentionally simple; it does not understand all synonyms or languages.
+- This project does not use ML, NLP, an LLM, authentication, or persistent user storage.
+- The free hosting tier can spin down when idle, and its terms may change.
+
+## 🔮 Future Improvements
+
+- Verify catalogue entries against dated official guidelines and source links.
+- Add data freshness checks and a documented review/update workflow.
+- Improve controlled vocabularies, language support, and matching coverage.
+- Expand state-specific eligibility and accessibility testing.
+- Add deployment monitoring and automated deployment through a connected repository Blueprint.
+
+## 🔐 Privacy and Safety
+
+The app does not request Aadhaar numbers, bank account information, passwords, or payment details. It does not persist conversation profiles. Avoid entering sensitive personal information, and use official government channels for applications and authoritative eligibility guidance.
