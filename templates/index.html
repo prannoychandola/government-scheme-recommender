@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174a3d">
+  <meta name="description" content="A transparent, rule-based discovery tool for Indian government scheme listings.">
+  <title>Scheme Finder | Public Support Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Scheme Finder home">
+      <span class="brand-mark" aria-hidden="true">IN</span>
+      <span><strong>Scheme Finder</strong><small>PUBLIC SUPPORT DIRECTORY</small></span>
+    </a>
+    <div class="topbar-meta"><span class="status-dot"></span> Local demo <span class="topbar-divider">|</span> Rule-based matching</div>
+  </header>
+
+  <main class="app-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">INDIA · SCHEME DISCOVERY</p>
+        <h1 id="page-title">Find support that fits your situation.</h1>
+        <p class="intro-copy">Answer a few optional questions to explore relevant public programmes.</p>
+      </div>
+      <button id="restart-button" class="restart-button" type="button" title="Restart conversation" aria-label="Restart conversation" disabled>
+        <span aria-hidden="true">↻</span><span>Start over</span>
+      </button>
+    </section>
+
+    <div class="workspace">
+      <aside class="context-panel" aria-label="Search information">
+        <div class="panel-block">
+          <div class="panel-heading"><span class="panel-icon" aria-hidden="true">◎</span><h2>Your search</h2></div>
+          <p>Share only what you are comfortable sharing. Skip anything you prefer not to answer.</p>
+          <div class="privacy-note"><span aria-hidden="true">◇</span><span>No Aadhaar, bank details or passwords are requested.</span></div>
+        </div>
+        <div class="panel-block categories-block">
+          <div class="panel-heading"><span class="panel-icon saffron" aria-hidden="true">▤</span><h2>Explore areas</h2></div>
+          <div id="category-list" class="category-list" aria-live="polite"><span class="skeleton-line"></span><span class="skeleton-line short"></span></div>
+        </div>
+        <div class="panel-footnote">
+          <span class="info-mark" aria-hidden="true">i</span>
+          <p>Suggestions are informational, not an eligibility decision. Always confirm details with the official department.</p>
+        </div>
+      </aside>
+
+      <section class="chat-panel" aria-label="Scheme finder conversation">
+        <div class="chat-toolbar">
+          <div class="assistant-identity"><span><strong>Government scheme desk</strong><small id="assistant-status">Ready when you are</small></span></div>
+          <div id="progress-label" class="progress-label" aria-live="polite"></div>
+        </div>
+        <div id="messages" class="messages" role="log" aria-live="polite" aria-relevant="additions text">
+          <div class="message-row assistant-row"><div class="message-bubble assistant-bubble">Hello. I can help you explore government scheme listings. We’ll take this one question at a time, and you can skip optional details.</div></div>
+          <div class="welcome-actions"><button id="begin-button" class="primary-button" type="button">Begin a search <span aria-hidden="true">→</span></button></div>
+        </div>
+        <div id="recommendations" class="recommendations" aria-live="polite"></div>
+        <div id="composer-area" class="composer-area">
+          <p class="composer-hint">Start a search to continue.</p>
+        </div>
+      </section>
+    </div>
+    <footer class="page-footer"><span>Scheme Finder · Informational discovery tool</span><a href="https://www.myscheme.gov.in/" target="_blank" rel="noreferrer">Visit MyScheme <span aria-hidden="true">↗</span></a></footer>
+  </main>
+
+  <dialog id="scheme-dialog" class="scheme-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><div><p class="eyebrow">SCHEME DETAILS</p><h2 id="dialog-title">Scheme name</h2></div><button id="close-dialog" class="icon-button" type="button" aria-label="Close details">×</button></div>
+    <div id="dialog-content" class="dialog-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>
